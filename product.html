@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <style>
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        nav {
+            background: white;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            color: black;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-family: 'Poppins';
+            font-weight: 600;
+            color: #ff4d4d;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+
+        .hero {
+            background: #f8f9fa;
+            padding: 4rem 2rem;
+            text-align: center;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.418), rgba(0, 0, 0, 0.678)), url('images/product-header.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #ffd6d6;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .products {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-card h3 {
+            margin: 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        .price {
+            color: #ff4d4d;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .wishlist-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .wishlist-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .wishlist-btn.active {
+            color: red;
+        }
+
+        .stock-status {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: white;
+            background: #22c55e;
+        }
+
+        .stock-status.low {
+            background: #ff4d4d;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stars {
+            color: #fbbf24;
+        }
+
+        .reviews {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .color-options {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .color-option {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .color-option:hover {
+            transform: scale(1.2);
+        }
+
+        .color-option.selected {
+            border: 2px solid #333;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quantity-btn {
+            background: #f1f5f9;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .add-to-cart-btn {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-to-cart-btn:hover {
+            background: #ea580c;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            width: 350px;
+            background: white;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .cart-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .cart-header {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .cart-items {
+            padding: 1rem;
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .cart-item-details h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-total {
+            padding: 1rem;
+            border-top: 1px solid #e2e8f0;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .checkout-btn {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 1rem;
+            width: calc(100% - 2rem);
+            margin: 0 1rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #22c55e;
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+        .confirm-text{
+            color: #22c55e;
+            padding-bottom: 5px;
+            font-weight: 400;
+            font-family: "Oxygen";
+        }
+
+        .flash-sale {
+            background: linear-gradient(45deg, #ef4444, #f97316);
+            color: white;
+            padding: 0.8rem;
+            text-align: center;
+            font-weight: bold;
+            animation: flash 2s infinite;
+        }
+        .payment-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    width: 90%;
+    max-width: 1000px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.payment-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.payment-content {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    min-height: 600px;
+}
+
+.payment-left {
+    padding: 3rem;
+}
+
+.payment-right {
+    background: #f8f9fa;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    padding: 3rem;
+}
+
+.payment-left h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+}
+
+.payment-subtitle {
+    color: #666;
+    margin-bottom: 2.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+    font-size: 0.9rem;
+}
+
+.card-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.card-icon {
+    position: absolute;
+    left: 1rem;
+    height: 24px;
+    width: 24px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.card-input-wrapper input {
+    padding-left: 3rem;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #ff4d4d;
+    background: white;
+}
+
+.card-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.discount-wrapper {
+    display: flex;
+    gap: 1rem;
+}
+
+.apply-btn {
+    padding: 0 1.5rem;
+    border: none;
+    background: none;
+    color: #ff4d4d;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.pay-now-btn {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 1rem;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 2rem;
+    transition: background-color 0.3s ease;
+}
+
+.pay-now-btn:hover {
+    background: #ea580c;
+}
+
+.amount-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.amount-card h3 {
+    color: #666;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.amount {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.cents {
+    color: #666;
+    font-size: 1.5rem;
+}
+
+.features {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.feature-item {
+    display: flex;
+    gap: 1rem;
+}
+
+.feature-icon {
+    width: 24px;
+    height: 24px;
+    background: #e6f7ed;
+    color: #22c55e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.feature-text h4 {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.feature-text p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    
+    .payment-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .payment-right {
+        border-radius: 0;
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+    }
+    
+    .payment-left, .payment-right {
+        padding: 2rem;
+    }
+}
+
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .modal.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            .cart-sidebar {
+                width: 100%;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .modal{
+                height: 50%;
+                width: 70%;
+            }
+            .modal img{
+                width: 55%;
+            }
+            .modal h2{
+                font-size: 1.2em;
+            }
+            .modal p{
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="flash-sale" id="flashSale">
+        🔥 Flash Sale! 20% OFF on all products! Ends soon! 🔥
+    </div>
+
+    <nav>
+        <div class="logo">✧ Freshlyglow</div>
+        <div class="nav-links">
+            <a href="fashion.html">Home</a>
+            <a href="about-us.html">About</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+        <div class="cart-icon" onclick="toggleCart()">
+            🛒 <span class="cart-count">0</span>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Treat Your Skin Only Here</h1>
+        <p>Discover the latest skin-care products and discoveries</p>
+    </div>
+
+    <div class="products" id="products"></div>
+
+    <div class="cart-sidebar">
+        <div class="cart-header">
+            <h2>Shopping Cart</h2>
+            <button class="close-cart" onclick="toggleCart()">✕</button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-total">Total: $<span id="cartTotal">0</span></div>
+        <button class="checkout-btn" onclick="checkout()">Checkout</button>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal" id="checkoutModal">
+        <h2>Thank you for your purchase! 🎉</h2>
+        <img src="images/buyer.png" alt="">
+        <p class="confirm-text">Your order has been confirmed and will be shipped soon.</p>
+        <button class="add-to-cart-btn" onclick="closeModal()">Continue Shopping</button>
+    </div>
+
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-content">
+            <div class="payment-left">
+                <h2>Final step, make the payment.</h2>
+                <p class="payment-subtitle">To finalize your purchase, kindly complete your payment using a valid credit card.</p>
+                
+                <form id="paymentForm" onsubmit="processPayment(event)">
+                    <div class="form-group">
+                        <label>Card number</label>
+                        <div class="card-input-wrapper">
+                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@v5.0.0/icons/mastercard.svg" 
+                                 alt="Mastercard" 
+                                 class="card-icon">
+                            <input type="text" id="cardNumber" placeholder="9870 8880 8880 8880" maxlength="19" required>
+                        </div>
+                    </div>
+                    
+                    <div class="card-details">
+                        <div class="form-group">
+                            <label>Expiry</label>
+                            <input type="text" id="expiryDate" placeholder="16 / 26" maxlength="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CVC</label>
+                            <input type="text" id="cvv" placeholder="• • •" maxlength="3" required>
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <label>Discount code</label>
+                        <div class="discount-wrapper">
+                            <input type="text" id="discountCode" placeholder="C00-20-OFF">
+                            <button type="button" class="apply-btn">Apply</button>
+                        </div>
+                    </div>
+    
+                    <button type="submit" class="pay-now-btn">Pay now</button>
+                </form>
+            </div>
+            
+            <div class="payment-right">
+                <div class="amount-card">
+                    <h3>You've to pay,</h3>
+                    <div class="amount">$<span id="paymentTotal">0</span><span class="cents">.00</span></div>
+                    
+                    <div class="features">
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div class="feature-text">
+                                <h4>Payment & Invoice</h4>
+                                <p>We'll worry about all the transactions and payment. You can sit back and relax while you make your clients happy.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div class="feature-text">
+                                <h4>Discounts & Offers</h4>
+                                <p>You'll be provided with discounts from time to time and have access to a wide range of perks and benefits.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: 'Hydrating Serum',
+                price: 49,
+                image: 'images/hydrating serum.jpg',
+                stock: 15,
+                rating: 4.5,
+                reviews: 128,
+                colors: ['#000000', '#silver', '#gold']
+            },
+            {
+                id: 2,
+                name: 'Vitamin C Cream',
+                price: 39,
+                image: 'images/vitamin cream.jpg',
+                stock: 8,
+                rating: 4.8,
+                reviews: 95,
+                colors: ['#000000', '#red', '#blue']
+            },
+            {
+                id: 3,
+                name: 'Skin Night Repair',
+                price: 149,
+                image: 'images/night repair.jpg',
+                stock: 22,
+                rating: 4.2,
+                reviews: 67,
+                colors: ['#white', '#black', '#pink']
+            }
+        ];
+
+        let cart = [];
+        let selectedColors = {};
+
+        function displayProducts() {
+            const productsDiv = document.getElementById('products');
+            productsDiv.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="stock-status ${product.stock < 10 ? 'low' : ''}">
+                        ${product.stock < 10 ? 'Low Stock' : 'In Stock'}
+                    </div>
+                    <button class="wishlist-btn" onclick="toggleWishlist(this)">❤️</button>
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <div class="rating">
+                        <div class="stars">${'⭐'.repeat(Math.floor(product.rating))}</div>
+                        <div class="reviews">(${product.reviews} reviews)</div>
+                    </div>
+                    <div class="color-options">
+                        ${product.colors.map(color => `
+                            <div class="color-option" 
+                                 style="background: ${color}"
+                                 onclick="selectColor(${product.id}, '${color}', this)">
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="quantity-selector">
+                        <button class="quantity-btn" onclick="updateQuantity(this, -1)">-</button>
+                        <span>1</span>
+                        <button class="quantity-btn" onclick="updateQuantity(this, 1)">+</button>
+                    </div>
+                    <div class="price">$${product.price}</div>
+                    
+
+                    <button class="add-to-cart-btn" onclick="addToCart(${product.id}, this)">Add to Cart</button>
+                </div>
+            `).join('');
+        }
+
+        function toggleWishlist(btn) {
+            btn.classList.toggle('active');
+            showNotification('Added to wishlist!');
+        }
+
+        function selectColor(productId, color, element) {
+            selectedColors[productId] = color;
+            const colorOptions = element.parentElement.querySelectorAll('.color-option');
+            colorOptions.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function updateQuantity(btn, change) {
+            const quantitySpan = btn.parentElement.querySelector('span');
+            let quantity = parseInt(quantitySpan.textContent) + change;
+            if (quantity < 1) quantity = 1;
+            quantitySpan.textContent = quantity;
+        }
+
+        function addToCart(productId, btn) {
+            const product = products.find(p => p.id === productId);
+            const quantity = parseInt(btn.parentElement.querySelector('.quantity-selector span').textContent);
+            const color = selectedColors[productId] || product.colors[0];
+            
+            cart.push({
+                ...product,
+                quantity,
+                color,
+                subtotal: product.price * quantity
+            });
+            
+            updateCartDisplay();
+            showNotification('Added to cart!');
+        }
+
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cartItems');
+            const cartCount = document.querySelector('.cart-count');
+            const cartTotal = document.getElementById('cartTotal');
+
+            cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-details">
+                        <h4>${item.name}</h4>
+                        <p>Color: ${item.color}</p>
+                        <p>Quantity: ${item.quantity}</p>
+                        <p>$${item.subtotal}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + item.subtotal, 0);
+            cartTotal.textContent = total.toFixed(2);
+        }
+
+        function toggleCart() {
+            document.querySelector('.cart-sidebar').classList.toggle('open');
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => notification.classList.remove('show'), 3000);
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty!');
+                return;
+            }
+            
+            document.getElementById('modalOverlay').classList.add('show');
+            document.getElementById('checkoutModal').classList.add('show');
+            cart = [];
+            updateCartDisplay();
+            toggleCart();
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('show');
+            document.getElementById('checkoutModal').classList.remove('show');
+        }
+
+        // Flash sale countdown
+        let countdown = 24 * 60 * 60; // 24 hours in seconds
+        const flashSaleTimer = setInterval(() => {
+            countdown--;
+            if (countdown <= 0) {
+                clearInterval(flashSaleTimer);
+                document.getElementById('flashSale').style.display = 'none';
+                return;
+            }
+            
+            const hours = Math.floor(countdown / 3600);
+            const minutes = Math.floor((countdown % 3600) / 60);
+            const seconds = countdown % 60;
+            
+            document.getElementById('flashSale').textContent = 
+                `🔥 Flash Sale! 20% OFF - Ends in ${hours}h ${minutes}m ${seconds}s! 🔥`;
+        }, 1000);
+
+        function checkout() {
+    if (cart.length === 0) {
+        showNotification('Your cart is empty!');
+        return;
+    }
+    
+    // Show payment modal first
+    document.getElementById('modalOverlay').classList.add('show');
+    document.getElementById('paymentModal').classList.add('show');
+    updateOrderSummary();
+    toggleCart();
+}
+
+function closePaymentModal() {
+    document.getElementById('modalOverlay').classList.remove('show');
+    document.getElementById('paymentModal').classList.remove('show');
+}
+
+function processPayment(event) {
+    event.preventDefault();
+    
+    // Close payment modal
+    closePaymentModal();
+    
+    // Show success modal
+    document.getElementById('modalOverlay').classList.add('show');
+    document.getElementById('checkoutModal').classList.add('show');
+    
+    // Clear cart
+    cart = [];
+    updateCartDisplay();
+}
+
+function updateOrderSummary() {
+    const summaryContent = document.getElementById('orderSummary');
+    const paymentTotal = document.getElementById('paymentTotal');
+    
+    summaryContent.innerHTML = cart.map(item => `
+        <div class="summary-item">
+            <p>${item.name} x ${item.quantity}</p>
+            <p>$${item.subtotal.toFixed(2)}</p>
+        </div>
+    `).join('');
+    
+    const total = cart.reduce((sum, item) => sum + item.subtotal, 0);
+    paymentTotal.textContent = total.toFixed(2);
+}
+
+// Format card number as user types
+document.getElementById('cardNumber').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    let formattedValue = '';
+    for(let i = 0; i < value.length; i++) {
+        if(i > 0 && i % 4 === 0) {
+            formattedValue += ' ';
+        }
+        formattedValue += value[i];
+    }
+    e.target.value = formattedValue;
+});
+
+// Format expiry date as user types
+document.getElementById('expiryDate').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if(value.length > 2) {
+        value = value.slice(0,2) + '/' + value.slice(2,4);
+    }
+    e.target.value = value;
+});
+
+// Process payment and show confirmation
+function processPayment(event) {
+    event.preventDefault();
+    
+    // Here you would typically integrate with a payment processor
+    // For this example, we'll simulate a successful payment
+    
+    closePaymentModal();
+    document.getElementById('checkoutModal').classList.add('show');
+    cart = [];
+    updateCartDisplay();
+}
+
+function updateOrderSummary() {
+    const paymentTotal = document.getElementById('paymentTotal');
+    const total = cart.reduce((sum, item) => sum + item.subtotal, 0);
+    paymentTotal.textContent = total.toFixed(0);
+};
+
+        // Initialize the page
+        displayProducts();
+    </script>
+</body>
+</html>

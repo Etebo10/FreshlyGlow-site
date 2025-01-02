@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about Freshlyglow's mission and team">
+    <title>About Us - Freshlyglow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        :root {
+            --primary-color: #ffd6d6;
+            --secondary-color: #333;
+            --accent-color: #ff9292;
+            --text-color: #333;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: var(--primary-color);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .about-hero {
+            padding-top: 80px;
+            height: 400px;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/about-img.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .about-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .about-content {
+            padding: 5rem 10%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .about-text {
+            padding-right: 2rem;
+        }
+
+        .about-text h2 {
+            color: var(--text-color);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text h3 {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .values {
+            background-color: #f9f9f9;
+            padding: 5rem 10%;
+            text-align: center;
+        }
+
+        .values h2 {
+            font-size: 2.5rem;
+            color: #ff4d4d;
+            margin-bottom: 3rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .value-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .value-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .value-card h3 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .value-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .team {
+            padding: 5rem 10%;
+            text-align: center;
+        }
+
+        .team h2 {
+            font-size: 2.5rem;
+            color: #ff4d4d;
+            margin-bottom: 3rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .team-member {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .team-member img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .team-info {
+            padding: 1.5rem;
+        }
+
+        .team-info h3 {
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .team-info p {
+            color: #666;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 3rem 5%;
+            }
+
+            .about-text {
+                padding-right: 0;
+            }
+
+            .values-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">✧ FreshlyGlow</div>
+        <div class="nav-links">
+            <a href="fashion.html">Home</a>
+            <a href="#shop">Shop</a>
+            <a href="#products">Products</a>
+            <a href="#about">About Us</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <section class="about-hero">
+        <h1>About Us</h1>
+        <div class="breadcrumb">
+            <a href="fashion.html">Home</a>
+            <span>></span>
+            <span>About</span>
+        </div>
+    </section>
+
+    <section class="about-content">
+        <div class="about-image">
+            <img src="images/about-header.jpg" alt="Freshlyglow team working">
+        </div>
+        <div class="about-text">
+            <h3>ABOUT FRESHLYGLOW</h3>
+            <h2>Natural Beauty Through Innovation</h2>
+            <p>At FreshlyGlow, we believe in the power of nature combined with scientific innovation to create skincare products that truly transform your skin. Founded in 2015, we've been dedicated to developing pure, effective formulations that work in harmony with your skin's natural processes.</p>
+            <p>Our team of expert dermatologists and botanists work tirelessly to source the finest natural ingredients and develop formulations that deliver real results. We're committed to sustainability, ethical sourcing, and creating products that are both good for you and the environment.</p>
+        </div>
+    </section>
+
+    <section class="values">
+        <h2>Our Core Values</h2>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">🌿</div>
+                <h3>Natural Ingredients</h3>
+                <p>We source only the purest, highest-quality natural ingredients, ensuring each product is effective and gentle on your skin.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🔬</div>
+                <h3>Scientific Innovation</h3>
+                <p>Our research team combines traditional knowledge with cutting-edge science to create revolutionary skincare solutions.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">♻️</div>
+                <h3>Sustainability</h3>
+                <p>We're committed to environmental responsibility, from sustainable sourcing to eco-friendly packaging.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="team">
+        <h2>Meet Our Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="images/derma-1-removebg-preview.png" alt="Dr. Sarah Johnson">
+                <div class="team-info">
+                    <h3>Dr. Sarah Johnson</h3>
+                    <p>Chief Dermatologist</p>
+                </div>
+            </div>
+            <div class="team-member">
+                <img src="images/derma-3-removebg-preview.png" alt="Michael Chen">
+                <div class="team-info">
+                    <h3>Michael Chen</h3>
+                    <p>Head of Research</p>
+                </div>
+            </div>
+            <div class="team-member">
+                <img src="images/derma-2.jpg" alt="Emma Roberts">
+                <div class="team-info">
+                    <h3>Emma Roberts</h3>
+                    <p>Sustainability Director</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 50) {
+                    nav.style.padding = '1rem 5%';
+                    nav.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                } else {
+                    nav.style.padding = '1.5rem 5%';
+                    nav.style.boxShadow = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
